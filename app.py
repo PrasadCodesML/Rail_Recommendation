@@ -88,8 +88,14 @@ busy_hours_hingoli = {
 }
 def is_within_busy_hours(departure_time, busy_hours):
     """Check if the departure time is within any of the busy hour ranges."""
+    departure_time = datetime.strptime(departure_time, "%H:%M").time()
+    
     for start, end in busy_hours:
-        if start <= departure_time <= end:
+        start_time = datetime.strptime(start, "%H:%M").time()
+        end_time = datetime.strptime(end, "%H:%M").time()
+        
+        # Check if departure time is within the range
+        if start_time <= departure_time <= end_time:
             return True
     return False
 
